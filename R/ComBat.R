@@ -72,7 +72,8 @@ ComBat <- function(dat, batch, mod=NULL, par.prior=TRUE,prior.plots=FALSE) {
     gamma.hat=apply(s.data,1,Beta.NA,batch.design)
     
   }
-  delta.hat <- NULL
+  #delta.hat <- calculateDelatHat(s.data, batches)
+  #colnames(delta.hat2) <- rownames(s.data)
   for (i in batches){
     delta.hat <- rbind(delta.hat,apply(s.data[,i], 1, var,na.rm=T))
   }

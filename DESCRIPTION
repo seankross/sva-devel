@@ -36,7 +36,8 @@ Suggests:
     bladderbatch,
     BiocStyle,
     zebrafishRNASeq,
-    testthat
+    testthat,
+    Rcpp
 License: Artistic-2.0
 biocViews: Microarray, StatisticalMethod, Preprocessing,
     MultipleComparison, Sequencing, RNASeq, BatchEffect, Normalization
