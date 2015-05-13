@@ -132,7 +132,7 @@ ComBatFrank <- function(dat, batch, mod=NULL, par.prior=TRUE,prior.plots=FALSE) 
       delta.star <- rbind(delta.star,temp[2,])
     }
     # NEW CPP VERSION (Frank)
-    gammaDeltaStar <- calculateIntEprior(s.data, gamma.hat, delta.hat)
+    gammaDeltaStar <- calculateIntEprior(s.data, gamma.hat, delta.hat, batches, n.batch)
   }
   ### Parse gammaDeltaStar return object from C++ into gamma.star and delta.star
   gamma.star <- gammaDeltaStar[c(1:n.batch),]
