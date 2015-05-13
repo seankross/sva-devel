@@ -3,15 +3,13 @@
 using namespace Rcpp;
 using namespace arma;
 
-NumericVector icomp(NumericVector v, int skip) {
-    NumericVector vv(v.size()-1);
+void icomp(NumericVector src, NumericVector dst, int skip) {
     for (int i=0; i < skip; i++) {
-        vv[i] = v[i];
+        dst[i] = src[i];
     }
-    for (int i=skip+1; i < v.size(); i++) {
-        vv[i-1] = v[i];
+    for (int i=skip+1; i < src.size(); i++) {
+        dst[i-1] = src[i];
     }
-    return vv;
 }
 
 NumericMatrix submat(NumericMatrix m, NumericVector cols) {
@@ -40,19 +38,21 @@ NumericMatrix calculateIntEprior(NumericMatrix sDat, NumericMatrix gammaHatMatri
         NumericVector deltaHat = deltaHatMatrix(batchNum-1,_);
 
         int numRows = gammaHat.size();
+        NumericVector gamma(numRows-1);
+        NumericVector delta(numRows-1);
+        NumericMatrix dat(numRows-1,currentDat.ncol());
+
         NumericVector gammaStar(numRows), deltaStar(numRows);
         NumericVector ones(currentDat.ncol(), 1.0);
         vec j = as<NumericVector>(wrap(ones));
 
         for (int i = 0; i < sDat.nrow(); i++) {
-            // TODO make icomp more efficient by not rebuilding each time
-            NumericVector gamma = icomp(gammaHat, i);
-            NumericVector delta = icomp(deltaHat, i);
+            icomp(gammaHat, gamma, i);
+            icomp(deltaHat, delta, i);
 
             NumericVector x = currentDat(i,_);
             double n = x.size();
 
-            NumericMatrix dat(numRows-1,n);
             for (int k = 0; k < n; k++) {
                 for (int l = 0; l < dat.nrow(); l++) {
                     dat(l,k) = x[k];
@@ -74,6 +74,7 @@ NumericMatrix calculateIntEprior(NumericMatrix sDat, NumericMatrix gammaHatMatri
 
             gammaStar[i] = sum(gamma * LH) / sum(LH);
             deltaStar[i] = sum(delta * LH) / sum(LH);
+            printf("gammaStar[%d]: %f\n", i, gammaStar[i]);
         }
 
         gammaDeltaStar(batchNum-1,_) = clone(gammaStar);
