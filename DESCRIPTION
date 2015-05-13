@@ -37,7 +37,8 @@ Suggests:
     BiocStyle,
     zebrafishRNASeq,
     testthat,
-    Rcpp
+    Rcpp (>= 0.11.6)
+LinkingTo: Rcpp, RcppArmadillo
 License: Artistic-2.0
 biocViews: Microarray, StatisticalMethod, Preprocessing,
     MultipleComparison, Sequencing, RNASeq, BatchEffect, Normalization
