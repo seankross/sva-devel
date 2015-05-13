@@ -41,6 +41,8 @@ NumericMatrix calculateIntEprior(NumericMatrix sDat, NumericMatrix gammaHatMatri
 
         int numRows = gammaHat.size();
         NumericVector gammaStar(numRows), deltaStar(numRows);
+        NumericVector ones(currentDat.ncol(), 1.0);
+        vec j = as<NumericVector>(wrap(ones));
 
         for (int i = 0; i < sDat.nrow(); i++) {
             // TODO make icomp more efficient by not rebuilding each time
@@ -49,10 +51,6 @@ NumericMatrix calculateIntEprior(NumericMatrix sDat, NumericMatrix gammaHatMatri
 
             NumericVector x = currentDat(i,_);
             double n = x.size();
-
-            // Create matrix of all 1s
-            vec j(n);
-            j = j+1;
 
             NumericMatrix dat(numRows-1,n);
             for (int k = 0; k < n; k++) {
@@ -74,12 +72,8 @@ NumericMatrix calculateIntEprior(NumericMatrix sDat, NumericMatrix gammaHatMatri
             NumericVector LH = (1/pow((2*M_PI*delta),(n/2)))*exp(-s2/(2*delta));
             LH[is_na(LH)] = 0;
 
-            long double zzz = sum(LH);
-            printf("sum(LH): %Le\n", zzz);
-
             gammaStar[i] = sum(gamma * LH) / sum(LH);
             deltaStar[i] = sum(delta * LH) / sum(LH);
-            printf("gammaStar: %f\n", gammaStar[i]);
         }
 
         gammaDeltaStar(batchNum-1,_) = clone(gammaStar);
