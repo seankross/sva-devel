@@ -114,12 +114,19 @@ ComBatFrank <- function(dat, batch, mod=NULL, par.prior=TRUE,prior.plots=FALSE) 
   gamma.star <- delta.star <- NULL
   if(par.prior){
     cat("Finding parametric adjustments\n")
-    for (i in 1:n.batch){
-      temp <- it.sol(s.data[,batches[[i]]],gamma.hat[i,],
-                     delta.hat[i,],gamma.bar[i],t2[i],a.prior[i],b.prior[i])
-      gamma.star <- rbind(gamma.star,temp[1,])
-      delta.star <- rbind(delta.star,temp[2,])
-    }
+    # OLD R VERSION
+#     for (i in 1:n.batch){
+#       temp <- it.sol(s.data[,batches[[i]]],gamma.hat[i,],
+#                      delta.hat[i,],gamma.bar[i],t2[i],a.prior[i],b.prior[i])
+#       gamma.star <- rbind(gamma.star,temp[1,])
+#       delta.star <- rbind(delta.star,temp[2,])
+#     }
+    # NEW CPP VERSION (Frank)
+    gammaDeltaStar <- calculateItSol(s.data, gamma.hat, delta.hat, gamma.bar, t2, a.prior, b.prior,batches, n.batch)
+    gamma.star <- gammaDeltaStar[c(1:n.batch),]
+    colnames(gamma.star) <- rownames(s.data)
+    delta.star <- gammaDeltaStar[c((n.batch+1):(n.batch*2)),]
+    colnames(delta.star) <- rownames(s.data)
   }else{
     cat("Finding nonparametric adjustments\n")
     for (i in 1:n.batch){
@@ -128,7 +135,6 @@ ComBatFrank <- function(dat, batch, mod=NULL, par.prior=TRUE,prior.plots=FALSE) 
       delta.star <- rbind(delta.star,temp[2,])
     }
   }
-  
   
   ### Normalize the Data ###
   cat("Adjusting the Data\n")
