@@ -57,7 +57,7 @@ NumericVector postvar(NumericVector sum2, NumericVector n,
 }
 
 // [[Rcpp::export]]
-NumericMatrix sva_parametricAdjust(NumericMatrix sDat, NumericMatrix gammaHat, NumericMatrix deltaHat, NumericVector gammaBar, NumericVector t2,
+NumericMatrix parametricAdjust(NumericMatrix sDat, NumericMatrix gammaHat, NumericMatrix deltaHat, NumericVector gammaBar, NumericVector t2,
     NumericVector aPrior, NumericVector bPrior, List batches, int numBatches, double conv = 0.0001) {
 
     int length = gammaHat(0, _).size();
@@ -113,7 +113,7 @@ NumericMatrix sva_parametricAdjust(NumericMatrix sDat, NumericMatrix gammaHat, N
 
 // [[Rcpp::depends(RcppArmadillo)]]
 // [[Rcpp::export]]
-NumericMatrix sva_nonparametricAdjust(NumericMatrix sDat, NumericMatrix gammaHatMatrix,
+NumericMatrix nonparametricAdjust(NumericMatrix sDat, NumericMatrix gammaHatMatrix,
     NumericMatrix deltaHatMatrix, List batches, int numBatches) {
 
     int length = gammaHatMatrix(0, _).size();

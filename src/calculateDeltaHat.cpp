@@ -8,7 +8,7 @@ using namespace Rcpp;
 // For more on using Rcpp click the Help button on the editor toolbar
 
 // [[Rcpp::export]]
-NumericVector sva_calculateDeltaHat(NumericMatrix sData, List batches) {
+NumericVector calculateDeltaHat(NumericMatrix sData, List batches) {
   int numBatches = batches.size();
   int sDataRows = sData.nrow();
   NumericMatrix result(numBatches, sDataRows);
