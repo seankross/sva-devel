@@ -86,7 +86,7 @@ NumericMatrix parametricAdjust(NumericMatrix sDat, NumericMatrix gammaHat, Numer
             NumericVector diff;
             for (int i = 0; i < currentDat.nrow(); i++) {
                 diff = (currentDat(i,_) - gammaNew[i]);
-                sum2[i] = sum(!is_na(diff*diff));
+                sum2[i] = sum(diff*diff);
             }
 
             deltaNew = postvar(sum2, n, aPrior, bPrior, batchNum);
@@ -162,7 +162,7 @@ NumericMatrix nonparametricAdjust(NumericMatrix sDat, NumericMatrix gammaHatMatr
 
             gammaStar[i] = sum(gamma * LH) / sum(LH);
             deltaStar[i] = sum(delta * LH) / sum(LH);
-            printf("gammaStar[%d]: %f\n", i, gammaStar[i]);
+            //printf("gammaStar[%d]: %f\n", i, gammaStar[i]);
         }
 
         gammaDeltaStar(batchNum-1,_) = clone(gammaStar);

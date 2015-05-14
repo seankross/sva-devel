@@ -16,7 +16,7 @@
 #' @export
 #'
 
-ComBat2 <- function(dat, batch, mod=NULL, par.prior=TRUE, prior.plots=FALSE) {
+ComBat <- function(dat, batch, mod=NULL, par.prior=TRUE, prior.plots=FALSE) {
   # make batch a factor and make a set of indicators for batch
   if(length(dim(batch))>1){stop("This version of ComBat only allows one batch variable")}  ## to be updated soon!
   batch <- as.factor(batch)

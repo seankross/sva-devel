@@ -1,6 +1,6 @@
 Package: sva
 Title: Surrogate Variable Analysis
-Version: 3.15.0
+Version: 3.15.1
 Author: Jeffrey T. Leek <jtleek@gmail.com>, W. Evan Johnson <wej@bu.edu>,
     Hilary S. Parker <hiparker@jhsph.edu>, Elana J. Fertig <ejfertig@jhmi.edu>,
     Andrew E. Jaffe <ajaffe@jhsph.edu>, John D. Storey <jstorey@princeton.edu>
@@ -26,19 +26,20 @@ Description: The sva package contains functions for removing batch
     PNAS or Leek et al. 2011 Nat. Reviews Genetics).
 Maintainer: Jeffrey T. Leek <jtleek@gmail.com>, John D. Storey
     <jstorey@princeton.edu>, W. Evan Johnson <wej@bu.edu>
-Depends: 
-    R (>= 2.8),
+Depends:
+  R (>= 3.2.0)
+Imports: 
     mgcv,
-    genefilter
+    genefilter,
+    Rcpp
 Suggests: 
     limma,
     pamr,
     bladderbatch,
     BiocStyle,
     zebrafishRNASeq,
-    testthat,
-    Rcpp (>= 0.11.6)
-LinkingTo: Rcpp, RcppArmadillo
+    testthat
+LinkingTo: Rcpp (>= 0.11.6), RcppArmadillo
 License: Artistic-2.0
 biocViews: Microarray, StatisticalMethod, Preprocessing,
     MultipleComparison, Sequencing, RNASeq, BatchEffect, Normalization
