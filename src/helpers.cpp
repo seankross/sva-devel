@@ -82,12 +82,11 @@ NumericMatrix parametricAdjust(NumericMatrix sDat, NumericMatrix gammaHat, Numer
 
             gammaNew = postmean(gammaHat(batchNum-1,_), gammaBar, n, deltaOld, t2, batchNum);
 
-            // TODO need to check for NA?
             NumericVector sum2(currentDat.nrow());
             NumericVector diff;
             for (int i = 0; i < currentDat.nrow(); i++) {
                 diff = (currentDat(i,_) - gammaNew[i]);
-                sum2[i] = sum(diff*diff);
+                sum2[i] = sum(!is_na(diff*diff));
             }
 
             deltaNew = postvar(sum2, n, aPrior, bPrior, batchNum);
