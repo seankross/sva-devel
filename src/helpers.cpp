@@ -101,7 +101,7 @@ NumericMatrix parametricAdjust(NumericMatrix sDat, NumericMatrix gammaHat, Numer
             count++;
         }
 
-        printf("Batch %d took %d iterations until convergence\n", batchNum, count);
+        //printf("Batch %d took %d iterations until convergence\n", batchNum, count);
 
         gammaDeltaStar(batchNum-1,_) = clone(gammaNew);
         gammaDeltaStar(((batchNum-1)+numBatches),_) = clone(deltaNew);
